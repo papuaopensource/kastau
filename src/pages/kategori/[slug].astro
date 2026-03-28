@@ -1,0 +1,113 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { categories, policies } from "../../data/mockData";
+
+export function getStaticPaths() {
+  return categories.map((cat) => ({ params: { slug: cat.slug } }));
+}
+
+const { slug } = Astro.params;
+const category = categories.find((c) => c.slug === slug);
+if (!category) return Astro.redirect("/kategori");
+
+const catPolicies = policies.filter((p) => p.category === slug);
+
+const typeBadge: Record<string, string> = {
+  Perda:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-bird-50 text-bird-700 border border-bird-200",
+  Perbup:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-teluk-50 text-teluk-700 border border-teluk-200",
+  "SK Bupati":
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-paper-100 text-ink-600 border border-paper-300",
+  Pergub:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-gold-50 text-gold-700 border border-gold-200",
+};
+const statusBadge: Record<string, string> = {
+  berlaku:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-forest-50 text-forest-700 border border-forest-200",
+  direvisi:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-gold-50 text-gold-700 border border-gold-200",
+  dicabut:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-bird-50 text-bird-700 border border-bird-200",
+};
+---
+
+<MainLayout title={`${category.name} — Kastau`}>
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <nav class="flex items-center gap-1.5 text-sm text-ink-400 mb-8">
+      <a href="/kategori" class="hover:text-ink-700 transition-colors"
+        >Kategori</a
+      >
+      <Icon name="chevron-right" class="w-3.5 h-3.5 text-ink-300" />
+      <span class="text-ink-600 font-medium">{category.name}</span>
+    </nav>
+
+    <div class="flex items-start gap-5 mb-10 pb-8 border-b border-paper-200">
+      <div
+        class="w-14 h-14 rounded-xl bg-gold-50 border border-gold-200 flex items-center justify-center shrink-0"
+      >
+        <Icon name={category.icon} class="w-7 h-7 text-gold-600" />
+      </div>
+      <div>
+        <h1 class="font-semibold text-ink-900 text-3xl mb-1">
+          {category.name}
+        </h1>
+        <p class="text-ink-500 leading-relaxed">{category.description}</p>
+        <p class="text-ink-300 font-mono text-sm mt-2">
+          {category.policyCount} kebijakan terdokumentasi
+        </p>
+      </div>
+    </div>
+
+    {
+      catPolicies.length > 0 ? (
+        <div class="bg-white border border-paper-200 rounded-xl overflow-hidden divide-y divide-paper-100 hover:shadow-sm">
+          {catPolicies.map((policy) => (
+            <a
+              href={`/kebijakan/${policy.id}`}
+              class="flex items-start gap-4 px-5 py-4 hover:bg-paper-50 transition-colors group"
+            >
+              <div class="shrink-0 pt-0.5 w-20">
+                <span class={typeBadge[policy.type]}>{policy.type}</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-ink-400 text-xs font-mono mb-0.5">
+                  {policy.number}
+                </p>
+                <p class="text-ink-800 font-medium text-sm group-hover:text-gold-700 transition-colors leading-snug">
+                  {policy.title}
+                </p>
+                <p class="text-ink-400 text-sm mt-1 line-clamp-1 hidden sm:block">
+                  {policy.summary}
+                </p>
+              </div>
+              <div class="shrink-0 hidden sm:flex flex-col items-end gap-1.5 pt-0.5">
+                <span class="text-ink-300 text-xs font-mono">
+                  {policy.year}
+                </span>
+                <span class={statusBadge[policy.status]}>{policy.status}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20 bg-white border border-paper-200 rounded-xl">
+          <div class="w-14 h-14 rounded-xl bg-paper-100 flex items-center justify-center mx-auto mb-4">
+            <Icon name={category.icon} class="w-7 h-7 text-ink-300" />
+          </div>
+          <p class="text-ink-600 font-medium mb-1">Data sedang dikumpulkan</p>
+          <p class="text-ink-400 text-sm">
+            Kebijakan untuk kategori ini akan segera tersedia.
+          </p>
+          <a
+            href="/kebijakan"
+            class="inline-flex items-center gap-1 text-gold-600 hover:text-gold-800 text-sm font-medium mt-4 transition-colors"
+          >
+            Lihat semua kebijakan <Icon name="arrow-right" class="w-4 h-4" />
+          </a>
+        </div>
+      )
+    }
+  </div>
+</MainLayout>

@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Fonts ── */
+  --font-display: 'Onest', system-ui, sans-serif;
+  --font-body:    'Onest', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* ── paper — warm off-white backgrounds ── */
+  --color-paper-50:  #FEFDFB;
+  --color-paper-100: #F7F5F0;
+  --color-paper-200: #EDE9E0;
+  --color-paper-300: #DDD8CC;
+  --color-paper-400: #C8C1B2;
+  --color-paper-500: #ACA390;
+  --color-paper-600: #8C8370;
+  --color-paper-700: #6A6354;
+  --color-paper-800: #4A4540;
+  --color-paper-900: #2A2722;
+
+  /* ── ink — text tones ── */
+  --color-ink-50:  #F5F4F2;
+  --color-ink-100: #E8E6E1;
+  --color-ink-200: #CECCBF;
+  --color-ink-300: #B0AD9E;
+  --color-ink-400: #888578;
+  --color-ink-500: #605D52;
+  --color-ink-600: #464440;
+  --color-ink-700: #302F2C;
+  --color-ink-800: #1D1C1A;
+  --color-ink-900: #0F0E0D;
+
+  /* ── gold — Papua amber accent ── */
+  --color-gold-50:  #FDF8EE;
+  --color-gold-100: #FAF0D2;
+  --color-gold-200: #F4DFA0;
+  --color-gold-300: #EDCA65;
+  --color-gold-400: #E5B336;
+  --color-gold-500: #C49318;
+  --color-gold-600: #A67A0E;
+  --color-gold-700: #85610C;
+  --color-gold-800: #5E4510;
+  --color-gold-900: #3A2B0A;
+
+  /* ── forest — Jayapura green ── */
+  --color-forest-50:  #F0F7F2;
+  --color-forest-100: #DCEEE1;
+  --color-forest-200: #B4D9BF;
+  --color-forest-300: #83BE97;
+  --color-forest-400: #529E6C;
+  --color-forest-500: #2E7D4E;
+  --color-forest-600: #1C6038;
+  --color-forest-700: #154D2C;
+  --color-forest-800: #0F3820;
+  --color-forest-900: #092415;
+
+  /* ── bird — Cendrawasih red ── */
+  --color-bird-50:  #FEF2EF;
+  --color-bird-100: #FDE0D8;
+  --color-bird-200: #F9BAA8;
+  --color-bird-300: #F28D72;
+  --color-bird-400: #E85F3C;
+  --color-bird-500: #D03E1E;
+  --color-bird-600: #A83015;
+  --color-bird-700: #822412;
+  --color-bird-800: #5C1A0D;
+  --color-bird-900: #350F07;
+
+  /* ── teluk — Teluk Yotefa blue ── */
+  --color-teluk-50:  #EEF5FB;
+  --color-teluk-100: #D5E8F5;
+  --color-teluk-200: #A6CCE9;
+  --color-teluk-300: #6FACD8;
+  --color-teluk-400: #3D8DC3;
+  --color-teluk-500: #1E6FA8;
+  --color-teluk-600: #165687;
+  --color-teluk-700: #104069;
+  --color-teluk-800: #0B2C4A;
+  --color-teluk-900: #061A2C;
+
+  /* ── font sizes ── */
+  --font-size-2xs: 0.65rem;
+  --line-height-2xs: 1rem;
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    font-family: 'Onest', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #1D1C1A;
+    background-color: #F7F5F0;
+    scroll-behavior: smooth;
+  }
+
+  ::selection { background: #F4DFA0; color: #1D1C1A; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #F7F5F0; }
+  ::-webkit-scrollbar-thumb { background: #C8C1B2; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #ACA390; }
+}

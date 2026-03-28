@@ -1,0 +1,208 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Icon from "../components/Icon.astro";
+import { stats } from "../data/mockData";
+---
+
+<MainLayout title="Tentang Kastau">
+  <div class="max-w-4xl mx-auto px-6 py-10">
+    <div class="mb-12 max-w-2xl">
+      <p
+        class="text-gold-600 font-mono text-xs uppercase tracking-[0.12em] font-medium mb-2"
+      >
+        Tentang
+      </p>
+      <h1 class="font-semibold text-ink-900 text-4xl leading-tight mb-4">
+        Tahu. Paham. <span class="text-gold-600 italic">Bersuara.</span>
+      </h1>
+      <p class="text-ink-500 text-lg leading-relaxed">
+        Kastau adalah platform sipil yang membantu warga Kabupaten Jayapura
+        memahami kebijakan publik pemerintah daerah dengan mudah.
+      </p>
+    </div>
+
+    <!-- Misi & Visi -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+      <div class="bg-white border border-paper-200 rounded-xl p-6">
+        <div
+          class="w-10 h-10 rounded-lg bg-gold-50 flex items-center justify-center mb-4"
+        >
+          <Icon name="info" class="w-5 h-5 text-gold-600" />
+        </div>
+        <h2 class="font-semibold text-ink-800 text-xl mb-2">Misi</h2>
+        <p class="text-ink-500 text-sm leading-relaxed">
+          Menjembatani jarak antara dokumen pemerintah yang kompleks dan warga
+          yang berkepentingan, sehingga partisipasi demokratis menjadi lebih
+          mudah dan bermakna di Kabupaten Jayapura.
+        </p>
+      </div>
+      <div class="bg-white border border-paper-200 rounded-xl p-6">
+        <div
+          class="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center mb-4"
+        >
+          <Icon name="check" class="w-5 h-5 text-forest-600" />
+        </div>
+        <h2 class="font-semibold text-ink-800 text-xl mb-2">Visi</h2>
+        <p class="text-ink-500 text-sm leading-relaxed">
+          Setiap warga Kabupaten Jayapura memiliki akses mudah terhadap
+          informasi kebijakan yang mempengaruhi kehidupan mereka, dari kampung
+          hingga kota Sentani.
+        </p>
+      </div>
+    </div>
+
+    <!-- Mengapa -->
+    <div class="mb-12">
+      <h2 class="font-semibold text-ink-900 text-2xl mb-5">Mengapa Kastau?</h2>
+      <div
+        class="bg-white border border-paper-200 rounded-xl p-6 space-y-4 text-ink-600 leading-relaxed text-[15px]"
+      >
+        <p>
+          Kabupaten Jayapura memiliki {stats.kecamatan} kecamatan dan {
+            stats.kampung
+          } kampung yang tersebar di wilayah yang luas. Banyak kebijakan pemerintah
+          yang langsung berdampak pada kehidupan warga — dari pengelolaan hutan adat,
+          pengembangan infrastruktur, hingga program beasiswa — namun informasi ini
+          tersebar di berbagai dokumen resmi yang sulit diakses.
+        </p>
+        <p>
+          Kastau hadir untuk mengubah ini. Dengan memanfaatkan teknologi dan
+          semangat sukarelawan, kami mengumpulkan, meringkas, dan
+          mengkategorikan kebijakan agar mudah ditemukan dan dipahami oleh
+          siapapun.
+        </p>
+        <p>
+          Nama "Kastau" berasal dari dialek Papua yang berarti <em
+            >kasih tahu</em
+          > — karena kami percaya bahwa warga yang tahu adalah fondasi demokrasi yang
+          sehat.
+        </p>
+      </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="mb-12">
+      <h2 class="font-semibold text-ink-900 text-2xl mb-6">Dampak Kastau</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {
+          [
+            {
+              value: stats.kebijakanTerdokumentasi,
+              label: "Kebijakan",
+              sub: "terdokumentasi",
+            },
+            { value: stats.kecamatan, label: "Kecamatan", sub: "terliputi" },
+            { value: stats.kampung, label: "Kampung", sub: "dan desa" },
+            {
+              value: stats.wargaBerlangganan,
+              label: "Warga",
+              sub: "berlangganan",
+            },
+          ].map((m) => (
+            <div class="bg-white border border-paper-200 rounded-xl p-5 text-center ">
+              <p class="font-semibold text-ink-900 text-3xl">
+                {m.value.toLocaleString("id-ID")}
+              </p>
+              <p class="text-ink-700 text-sm font-semibold mt-1">{m.label}</p>
+              <p class="text-ink-400 text-xs">{m.sub}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Prinsip -->
+    <div class="mb-12">
+      <h2 class="font-semibold text-ink-900 text-2xl mb-5">Prinsip Kami</h2>
+      <div class="space-y-3">
+        {
+          [
+            {
+              icon: "github",
+              label: "Open Source",
+              text: "Kode terbuka, dapat diaudit siapapun.",
+            },
+            {
+              icon: "check",
+              label: "Tanpa Keberpihakan",
+              text: "Informasi disajikan apa adanya tanpa agenda politik.",
+            },
+            {
+              icon: "info",
+              label: "Privasi",
+              text: "Tidak ada pelacakan, tidak ada iklan, tidak ada penjualan data.",
+            },
+            {
+              icon: "alert-circle",
+              label: "Bukan Institusi Resmi",
+              text: "Selalu verifikasi dokumen asli untuk keperluan hukum formal.",
+            },
+          ].map((p) => (
+            <div class="flex items-start gap-4 p-4 bg-white border border-paper-200 rounded-xl ">
+              <div class="w-8 h-8 rounded-lg bg-paper-100 flex items-center justify-center shrink-0">
+                <Icon name={p.icon} class="w-4 h-4 text-ink-500" />
+              </div>
+              <div>
+                <p class="font-semibold text-ink-800 text-sm">{p.label}</p>
+                <p class="text-ink-500 text-sm">{p.text}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Kontribusi -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-12">
+      <div class="bg-gold-50 border border-gold-200 rounded-xl p-6">
+        <h3 class="font-semibold text-ink-800 text-lg mb-2">Dukung Kastau</h3>
+        <p class="text-ink-500 text-sm leading-relaxed mb-4">
+          Kastau sepenuhnya gratis dan nirlaba, dikembangkan oleh <a
+            href="https://papuaopensource.github.io"
+            target="_blank"
+            rel="noopener"
+            class="text-gold-700 font-medium hover:underline"
+            >Papua Open Source</a
+          >. Donasi membantu kami menjaga layanan tetap berjalan.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          {
+            ["Rp 20.000", "Rp 50.000", "Rp 100.000"].map((amt) => (
+              <button class="inline-flex items-center justify-center bg-gold-600 hover:bg-gold-700 text-white font-medium text-xs px-3 py-1.5 rounded-lg transition-colors">
+                {amt}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      <div class="bg-forest-50 border border-forest-200 rounded-xl p-6">
+        <h3 class="font-semibold text-ink-800 text-lg mb-2">Kontribusi</h3>
+        <p class="text-ink-500 text-sm leading-relaxed mb-4">
+          Kastau adalah proyek open source oleh Papua Open Source. Developer,
+          desainer, dan peneliti sangat kami butuhkan.
+        </p>
+        <a
+          href="https://papuaopensource.github.io"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-1.5 bg-paper-200 hover:bg-paper-300 text-ink-700 font-medium text-xs px-3 py-2 rounded-lg border border-paper-300 transition-colors"
+        >
+          <Icon name="github" class="w-3.5 h-3.5" />Papua Open Source
+        </a>
+      </div>
+    </div>
+
+    <!-- Kontak -->
+    <div class="bg-white border border-paper-200 rounded-xl p-6 text-center">
+      <h3 class="font-semibold text-ink-800 text-lg mb-2">Kontak</h3>
+      <p class="text-ink-500 text-sm mb-4">
+        Ada pertanyaan, koreksi data, atau ingin berkolaborasi?
+      </p>
+      <a
+        href="mailto:halo@kastau.id"
+        class="text-gold-600 hover:text-gold-800 font-semibold text-sm transition-colors"
+        >halo@kastau.id</a
+      >
+    </div>
+  </div>
+</MainLayout>

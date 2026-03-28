@@ -1,0 +1,223 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Icon from "../components/Icon.astro";
+import { stats } from "../data/mockData";
+
+const steps = [
+  {
+    num: "01",
+    icon: "file-text",
+    title: "Pengumpulan Dokumen",
+    body: "Kastau mengumpulkan dokumen publik resmi dari JDIH Kabupaten Jayapura, situs pemerintah, dan sumber resmi lainnya secara berkala.",
+  },
+  {
+    num: "02",
+    icon: "info",
+    title: "Analisis & Ringkasan",
+    body: "Setiap dokumen dianalisis dan diringkas menggunakan kecerdasan buatan untuk menghasilkan penjelasan yang mudah dipahami warga.",
+  },
+  {
+    num: "03",
+    icon: "tag",
+    title: "Kategorisasi",
+    body: "Kebijakan dikategorikan berdasarkan bidang yang relevan sehingga mudah ditemukan oleh warga yang berkepentingan.",
+  },
+  {
+    num: "04",
+    icon: "bell",
+    title: "Pembaruan Berkala",
+    body: "Data diperbarui secara rutin. Kebijakan baru langsung ditampilkan di halaman kategori terkait tanpa perlu menunggu.",
+  },
+];
+
+const principles = [
+  {
+    icon: "github",
+    title: "Open Source",
+    body: "Seluruh kode sumber Kastau tersedia untuk publik di GitHub. Siapapun dapat mengaudit, berkontribusi, atau mendeploy sendiri.",
+  },
+  {
+    icon: "check",
+    title: "Tanpa Keberpihakan",
+    body: "Kastau menyajikan informasi kebijakan apa adanya, tanpa opini editorial atau agenda politik dari platform.",
+  },
+  {
+    icon: "info",
+    title: "Privasi Warga",
+    body: "Kami tidak melacak pengguna, tidak menggunakan analytics pihak ketiga, dan tidak pernah menjual data kepada siapapun.",
+  },
+  {
+    icon: "file-text",
+    title: "Data Publik",
+    body: "Seluruh konten bersumber dari dokumen pemerintah yang sudah bersifat publik. Kastau hanya membuatnya lebih mudah diakses.",
+  },
+  {
+    icon: "hukum-peraturan",
+    title: "Inklusif",
+    body: "Kastau dirancang untuk semua warga Kabupaten Jayapura, termasuk mereka yang tidak terbiasa dengan bahasa hukum formal.",
+  },
+  {
+    icon: "alert-circle",
+    title: "Bukan Institusi",
+    body: "Kastau bukan lembaga resmi. Untuk keperluan hukum resmi, selalu verifikasi dengan dokumen asli dari instansi terkait.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Apakah Kastau bagian dari pemerintah Kabupaten Jayapura?",
+    a: "Tidak. Kastau adalah platform sipil independen yang dikembangkan oleh Papua Open Source. Kami menggunakan dokumen publik resmi, tetapi tidak berafiliasi dengan pemerintah daerah.",
+  },
+  {
+    q: "Seberapa sering data diperbarui?",
+    a: "Kami berupaya memperbarui data setiap minggu. Namun karena ini adalah proyek sukarela, ada kalanya pembaruan terlambat.",
+  },
+  {
+    q: "Apakah ringkasan AI selalu akurat?",
+    a: "Ringkasan dihasilkan oleh AI dan telah melalui kurasi manusia, namun bisa mengandung ketidakakuratan. Selalu rujuk ke dokumen resmi untuk keperluan hukum.",
+  },
+  {
+    q: "Bagaimana cara saya melaporkan kesalahan?",
+    a: "Kirim email ke koreksi@kastau.id dengan menyertakan nomor kebijakan dan deskripsi kesalahan yang Anda temukan.",
+  },
+  {
+    q: "Apakah saya bisa menggunakan data Kastau untuk penelitian?",
+    a: "Ya, data kebijakan yang kami tampilkan bersifat publik. Kami hanya meminta Anda mencantumkan sumber jika mempublikasikan hasil penelitian.",
+  },
+];
+---
+
+<MainLayout title="Cara Kerja — Kastau">
+  <div class="max-w-4xl mx-auto px-6 py-10">
+    <div class="mb-12 max-w-2xl">
+      <p
+        class="text-gold-600 font-mono text-xs uppercase tracking-[0.12em] font-medium mb-2"
+      >
+        Transparansi
+      </p>
+      <h1 class="font-semibold text-ink-900 text-4xl mb-4">
+        Bagaimana Kastau Bekerja
+      </h1>
+      <p class="text-ink-500 text-lg leading-relaxed">
+        Platform sipil open source yang membantu warga memahami kebijakan publik
+        Kabupaten Jayapura. Bukan media, bukan lembaga resmi — hanya jembatan
+        antara dokumen pemerintah dan warga.
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-14">
+      {
+        [
+          {
+            value: stats.kebijakanTerdokumentasi,
+            label: "Kebijakan terdokumentasi",
+          },
+          { value: stats.kecamatan, label: "Kecamatan terliputi" },
+          { value: stats.kampung, label: "Kampung & desa" },
+          { value: stats.wargaBerlangganan, label: "Warga berlangganan" },
+        ].map((s) => (
+          <div class="bg-white border border-paper-200 rounded-xl p-4 text-center ">
+            <p class="font-semibold text-ink-900 text-2xl">
+              {s.value.toLocaleString("id-ID")}
+            </p>
+            <p class="text-ink-400 text-xs mt-1">{s.label}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Steps -->
+    <div class="mb-14">
+      <h2 class="font-semibold text-ink-900 text-2xl mb-8">Proses Kerja</h2>
+      <div class="space-y-4">
+        {
+          steps.map((step) => (
+            <div class="flex gap-5 p-5 bg-white border border-paper-200 rounded-xl ">
+              <div class="shrink-0 flex flex-col items-center gap-2">
+                <span class="text-ink-200 font-mono text-xs font-semibold">
+                  {step.num}
+                </span>
+                <div class="w-10 h-10 rounded-lg bg-gold-50 border border-gold-200 flex items-center justify-center">
+                  <Icon name={step.icon} class="w-5 h-5 text-gold-600" />
+                </div>
+              </div>
+              <div>
+                <h3 class="font-semibold text-ink-800 mb-1.5">{step.title}</h3>
+                <p class="text-ink-500 text-sm leading-relaxed">{step.body}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="border-t border-paper-200 my-10"></div>
+
+    <!-- Principles -->
+    <div class="mb-14">
+      <h2 class="font-semibold text-ink-900 text-2xl mb-8">Prinsip Kami</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {
+          principles.map((p) => (
+            <div class="p-5 bg-white border border-paper-200 rounded-xl ">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="w-8 h-8 rounded-lg bg-forest-50 flex items-center justify-center shrink-0">
+                  <Icon name={p.icon} class="w-4 h-4 text-forest-600" />
+                </div>
+                <h3 class="font-semibold text-ink-800 text-sm">{p.title}</h3>
+              </div>
+              <p class="text-ink-400 text-sm leading-relaxed">{p.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="mb-14">
+      <h2 class="font-semibold text-ink-900 text-2xl mb-8">Pertanyaan Umum</h2>
+      <div class="space-y-3">
+        {
+          faqs.map((item) => (
+            <details class="group bg-white border border-paper-200 rounded-xl overflow-hidden ">
+              <summary class="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none select-none">
+                <span class="font-medium text-ink-800 text-sm">{item.q}</span>
+                <Icon
+                  name="chevron-down"
+                  class="w-4 h-4 text-ink-400 shrink-0 group-open:rotate-180 transition-transform"
+                />
+              </summary>
+              <div class="px-5 pb-4 text-ink-500 text-sm leading-relaxed border-t border-paper-100 pt-3">
+                {item.a}
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gold-50 border border-gold-200 rounded-2xl p-8 text-center">
+      <h3 class="font-semibold text-ink-900 text-2xl mb-2">
+        Mulai Jelajahi Sekarang
+      </h3>
+      <p class="text-ink-500 mb-6 max-w-md mx-auto">
+        Temukan kebijakan yang relevan dengan kehidupan Anda di Kabupaten
+        Jayapura.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href="/kebijakan"
+          class="inline-flex items-center justify-center gap-1.5 bg-gold-600 hover:bg-gold-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors"
+          >Jelajahi Kebijakan</a
+        >
+        <a
+          href="/kategori"
+          class="inline-flex items-center justify-center gap-1.5 bg-paper-200 hover:bg-paper-300 text-ink-700 font-medium text-sm px-4 py-2 rounded-lg border border-paper-300 transition-colors"
+          >Lihat Kategori</a
+        >
+      </div>
+    </div>
+  </div>
+</MainLayout>

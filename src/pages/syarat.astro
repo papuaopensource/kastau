@@ -1,0 +1,56 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<MainLayout title="Syarat Layanan — Kastau">
+  <div class="max-w-3xl mx-auto px-6 py-10">
+    <div class="mb-10">
+      <p
+        class="text-gold-600 font-mono text-xs uppercase tracking-[0.12em] font-medium mb-2"
+      >
+        Legal
+      </p>
+      <h1 class="font-semibold text-ink-900 text-3xl mb-2">Syarat Layanan</h1>
+      <p class="text-ink-400 text-sm font-mono">
+        Terakhir diperbarui: 1 Januari 2026
+      </p>
+    </div>
+    <div class="space-y-5">
+      {
+        [
+          {
+            icon: "info",
+            title: "Penggunaan Layanan",
+            body: "Kastau adalah platform informasi publik. Anda bebas menggunakan, berbagi, dan merujuk informasi yang tersedia dengan menyebutkan sumbernya. Platform ini ditujukan untuk memfasilitasi keterlibatan warga dalam proses demokrasi lokal.",
+          },
+          {
+            icon: "github",
+            title: "Open Source",
+            body: "Kode sumber Kastau tersedia secara publik di bawah lisensi AGPL-3.0. Anda dapat mengaudit, memodifikasi, dan mendistribusikan ulang sesuai ketentuan lisensi tersebut.",
+          },
+          {
+            icon: "alert-circle",
+            title: "Batasan Tanggung Jawab",
+            body: "Kastau menyediakan informasi berdasarkan dokumen publik yang tersedia. Kami berupaya menjaga akurasi namun tidak dapat menjamin kelengkapan setiap data. Selalu verifikasi informasi penting dengan sumber resmi pemerintah.",
+          },
+          {
+            icon: "file-text",
+            title: "Kontak",
+            body: "Pertanyaan tentang syarat layanan? Hubungi legal@kastau.id",
+          },
+        ].map((s) => (
+          <div class="bg-white border border-paper-200 rounded-xl p-6">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-8 h-8 rounded-lg bg-paper-100 flex items-center justify-center shrink-0">
+                <Icon name={s.icon} class="w-4 h-4 text-ink-500" />
+              </div>
+              <h2 class="font-semibold text-ink-800">{s.title}</h2>
+            </div>
+            <p class="text-ink-500 text-sm leading-relaxed">{s.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,58 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<MainLayout title="Kebijakan Privasi — Kastau">
+  <div class="max-w-3xl mx-auto px-6 py-10">
+    <div class="mb-10">
+      <p
+        class="text-gold-600 font-mono text-xs uppercase tracking-[0.12em] font-medium mb-2"
+      >
+        Legal
+      </p>
+      <h1 class="font-semibold text-ink-900 text-3xl mb-2">
+        Kebijakan Privasi
+      </h1>
+      <p class="text-ink-400 text-sm font-mono">
+        Terakhir diperbarui: 1 Januari 2026
+      </p>
+    </div>
+    <div class="space-y-5">
+      {
+        [
+          {
+            icon: "check",
+            title: "Privasi Sebagai Prinsip Utama",
+            body: "Kastau dibangun dengan prinsip privacy first. Kami tidak melacak pengguna, tidak mengumpulkan data pribadi yang tidak perlu, dan tidak pernah menjual data kepada pihak ketiga.",
+          },
+          {
+            icon: "info",
+            title: "Data yang Kami Kumpulkan",
+            body: "Kastau adalah platform baca saja — tidak ada akun, tidak ada login. Kami tidak menyimpan data pribadi pengguna sama sekali. Tidak ada cookie pelacak atau analytics pihak ketiga.",
+          },
+          {
+            icon: "file-text",
+            title: "Data Pemerintahan adalah Publik",
+            body: "Seluruh konten kebijakan yang ditampilkan bersumber dari dokumen publik pemerintah. Data ini adalah milik publik dan kami hanya membuatnya lebih mudah diakses.",
+          },
+          {
+            icon: "alert-circle",
+            title: "Hubungi Kami",
+            body: "Pertanyaan tentang privasi? Kirim email ke privasi@kastau.id",
+          },
+        ].map((s) => (
+          <div class="bg-white border border-paper-200 rounded-xl p-6">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-8 h-8 rounded-lg bg-paper-100 flex items-center justify-center shrink-0">
+                <Icon name={s.icon} class="w-4 h-4 text-ink-500" />
+              </div>
+              <h2 class="font-semibold text-ink-800">{s.title}</h2>
+            </div>
+            <p class="text-ink-500 text-sm leading-relaxed">{s.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>

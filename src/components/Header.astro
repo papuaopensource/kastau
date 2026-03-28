@@ -1,0 +1,136 @@
+---
+import Icon from "./Icon.astro";
+const currentPath = Astro.url.pathname;
+const isActive = (path: string) =>
+  currentPath === path || (path !== "/" && currentPath.startsWith(path));
+---
+
+<header
+  class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-paper-200"
+>
+  <div
+    class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between gap-6"
+  >
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2.5 shrink-0 group">
+      <div
+        class="w-8 h-8 rounded-lg bg-gold-600 flex items-center justify-center shrink-0 shadow-sm group-hover:bg-gold-700 transition-colors"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="w-5 h-5"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <ellipse
+            cx="12"
+            cy="10.5"
+            rx="3.5"
+            ry="4.5"
+            fill="white"
+            fill-opacity="0.9"></ellipse>
+          <ellipse cx="12" cy="9.5" rx="2.5" ry="3.5" fill="#FBBF24"></ellipse>
+          <circle cx="12" cy="6.5" r="2" fill="white" fill-opacity="0.9"
+          ></circle>
+          <circle cx="11.4" cy="6.1" r="0.5" fill="#1D1C1A"></circle>
+          <path
+            d="M12 11.5 Q7.5 15 5.5 19.5 Q8.5 16.5 12 16 Q15.5 16.5 18.5 19.5 Q16.5 15 12 11.5Z"
+            fill="white"
+            fill-opacity="0.9"></path>
+        </svg>
+      </div>
+      <div>
+        <span
+          class="font-semibold text-ink-900 text-[15px] tracking-tight leading-none"
+          >kastau</span
+        >
+        <span
+          class="hidden sm:block text-ink-400 text-[0.65rem] font-mono leading-none mt-0.5"
+          >Jayapura · Papua</span
+        >
+      </div>
+    </a>
+
+    <!-- Nav -->
+    <nav class="hidden md:flex items-center gap-0.5">
+      <a
+        href="/kebijakan"
+        class={`text-sm px-3 py-1.5 rounded-lg font-medium transition-colors ${isActive("/kebijakan") ? "text-ink-900 bg-paper-200" : "text-ink-500 hover:text-ink-900 hover:bg-paper-200"}`}
+        >Kebijakan</a
+      >
+      <a
+        href="/kategori"
+        class={`text-sm px-3 py-1.5 rounded-lg font-medium transition-colors ${isActive("/kategori") ? "text-ink-900 bg-paper-200" : "text-ink-500 hover:text-ink-900 hover:bg-paper-200"}`}
+        >Kategori</a
+      >
+      <a
+        href="/cara-kerja"
+        class={`text-sm px-3 py-1.5 rounded-lg font-medium transition-colors ${isActive("/cara-kerja") ? "text-ink-900 bg-paper-200" : "text-ink-500 hover:text-ink-900 hover:bg-paper-200"}`}
+        >Cara Kerja</a
+      >
+      <a
+        href="/tentang"
+        class={`text-sm px-3 py-1.5 rounded-lg font-medium transition-colors ${isActive("/tentang") ? "text-ink-900 bg-paper-200" : "text-ink-500 hover:text-ink-900 hover:bg-paper-200"}`}
+        >Tentang</a
+      >
+    </nav>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-2">
+      <a
+        href="/cari"
+        class="hidden sm:flex items-center text-ink-400 hover:text-ink-700 p-2 rounded-lg hover:bg-paper-200 transition-colors"
+        aria-label="Cari"
+      >
+        <Icon name="search" class="w-4 h-4" />
+      </a>
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-1.5 text-ink-500 hover:text-ink-800 hover:bg-paper-200 rounded-lg transition-colors"
+        aria-label="Menu"
+      >
+        <Icon name="menu" class="w-5 h-5" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-paper-200 bg-white"
+  >
+    <nav class="max-w-5xl mx-auto px-6 py-3 flex flex-col gap-0.5">
+      <a
+        href="/kebijakan"
+        class="text-ink-500 hover:text-ink-900 text-sm px-3 py-2.5 rounded-lg hover:bg-paper-200 font-medium transition-colors"
+        >Kebijakan</a
+      >
+      <a
+        href="/kategori"
+        class="text-ink-500 hover:text-ink-900 text-sm px-3 py-2.5 rounded-lg hover:bg-paper-200 font-medium transition-colors"
+        >Kategori</a
+      >
+      <a
+        href="/cara-kerja"
+        class="text-ink-500 hover:text-ink-900 text-sm px-3 py-2.5 rounded-lg hover:bg-paper-200 font-medium transition-colors"
+        >Cara Kerja</a
+      >
+      <a
+        href="/tentang"
+        class="text-ink-500 hover:text-ink-900 text-sm px-3 py-2.5 rounded-lg hover:bg-paper-200 font-medium transition-colors"
+        >Tentang</a
+      >
+      <a
+        href="/cari"
+        class="text-ink-500 hover:text-ink-900 text-sm px-3 py-2.5 rounded-lg hover:bg-paper-200 font-medium transition-colors"
+        >Cari</a
+      >
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
+  btn?.addEventListener("click", () => menu?.classList.toggle("hidden"));
+</script>

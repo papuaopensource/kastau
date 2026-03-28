@@ -1,0 +1,59 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { categories } from "../../data/mockData";
+---
+
+<MainLayout title="Kategori — Kastau Jayapura">
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <div class="mb-10">
+      <p
+        class="text-gold-600 font-mono text-xs uppercase tracking-[0.12em] font-medium mb-1"
+      >
+        Jelajahi
+      </p>
+      <h1 class="font-semibold text-ink-900 text-3xl mb-2">
+        Kategori Kebijakan
+      </h1>
+      <p class="text-ink-500">
+        Temukan kebijakan yang relevan dengan bidang kehidupan Anda di Kabupaten
+        Jayapura.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {
+        categories.map((cat) => (
+          <a
+            href={`/kategori/${cat.slug}`}
+            class="group flex items-center gap-4 p-5 bg-white border border-paper-200 rounded-xl hover:border-gold-300 hover:shadow-sm transition-all duration-150"
+          >
+            <div class="w-12 h-12 rounded-xl bg-paper-100 group-hover:bg-gold-50 flex items-center justify-center shrink-0 transition-colors">
+              <Icon
+                name={cat.icon}
+                class="w-6 h-6 text-ink-500 group-hover:text-gold-600 transition-colors"
+              />
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <h2 class="font-semibold text-ink-800 group-hover:text-ink-900 transition-colors">
+                  {cat.name}
+                </h2>
+                <Icon
+                  name="chevron-right"
+                  class="w-4 h-4 text-ink-300 group-hover:text-gold-500 transition-colors shrink-0"
+                />
+              </div>
+              <p class="text-ink-400 text-sm mt-0.5 leading-snug">
+                {cat.description}
+              </p>
+              <p class="text-ink-300 text-xs mt-2 font-mono">
+                {cat.policyCount} kebijakan
+              </p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</MainLayout>

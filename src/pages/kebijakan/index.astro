@@ -1,0 +1,181 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { categories, policies } from "../../data/mockData";
+
+const years = [...new Set(policies.map((p) => p.year))].sort((a, b) => b - a);
+const policiesJson = JSON.stringify(policies);
+const categoriesJson = JSON.stringify(categories);
+---
+
+<MainLayout title="Kebijakan — Kastau Jayapura">
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <div class="mb-8">
+      <p
+        class="text-gold-600 font-mono text-xs uppercase tracking-[0.12em] font-medium mb-1"
+      >
+        Dokumen Publik
+      </p>
+      <h1 class="font-semibold text-ink-900 text-3xl mb-2">Kebijakan Publik</h1>
+      <p class="text-ink-500">
+        Peraturan daerah, peraturan bupati, dan surat keputusan Kabupaten
+        Jayapura.
+      </p>
+    </div>
+
+    <!-- Filters -->
+    <div
+      class="bg-white border border-paper-200 rounded-xl p-4 mb-6 flex flex-col sm:flex-row gap-3"
+    >
+      <div class="relative flex-1">
+        <Icon
+          name="search"
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-300 pointer-events-none"
+        />
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Cari judul atau nomor kebijakan..."
+          class="w-full bg-white border border-paper-300 text-ink-800 placeholder-ink-300 rounded-lg pl-9 pr-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-gold-400 transition-all"
+        />
+      </div>
+      <select
+        id="category-filter"
+        class="bg-white border border-paper-300 text-ink-700 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-gold-400 transition-all cursor-pointer min-w-[170px]"
+      >
+        <option value="">Semua Kategori</option>
+        {categories.map((cat) => <option value={cat.slug}>{cat.name}</option>)}
+      </select>
+      <select
+        id="year-filter"
+        class="bg-white border border-paper-300 text-ink-700 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-gold-400 transition-all cursor-pointer min-w-[120px]"
+      >
+        <option value="">Semua Tahun</option>
+        {years.map((year) => <option value={year}>{year}</option>)}
+      </select>
+    </div>
+
+    <p id="results-count" class="text-ink-400 text-sm mb-3 font-mono"></p>
+
+    <div
+      id="policy-list"
+      class="bg-white border border-paper-200 rounded-xl overflow-hidden divide-y divide-paper-100"
+    >
+    </div>
+
+    <div
+      id="empty-state"
+      class="hidden text-center py-20 bg-white border border-paper-200 rounded-xl"
+    >
+      <div
+        class="w-12 h-12 rounded-xl bg-paper-100 flex items-center justify-center mx-auto mb-4"
+      >
+        <Icon name="search" class="w-6 h-6 text-ink-300" />
+      </div>
+      <p class="text-ink-600 font-medium mb-1">Tidak ada hasil</p>
+      <p class="text-ink-400 text-sm">
+        Coba ubah filter atau kata kunci pencarian.
+      </p>
+    </div>
+  </div>
+</MainLayout>
+
+<script define:vars={{ policiesJson, categoriesJson }}>
+  const policies = JSON.parse(policiesJson);
+  const categories = JSON.parse(categoriesJson);
+  const catMap = Object.fromEntries(categories.map((c) => [c.slug, c]));
+
+  const typeCls = {
+    Perda:
+      "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-red-50 text-red-700 border border-red-200",
+    Perbup:
+      "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200",
+    "SK Bupati":
+      "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-stone-100 text-stone-600 border border-stone-200",
+    Pergub:
+      "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200",
+  };
+  const statusCls = {
+    berlaku:
+      "inline-flex items-center text-[0.65rem] font-medium px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200",
+    direvisi:
+      "inline-flex items-center text-[0.65rem] font-medium px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200",
+    dicabut:
+      "inline-flex items-center text-[0.65rem] font-medium px-1.5 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200",
+  };
+
+  function renderPolicies(filtered) {
+    const list = document.getElementById("policy-list");
+    const empty = document.getElementById("empty-state");
+    document.getElementById("results-count").textContent =
+      `${filtered.length} kebijakan`;
+
+    if (!filtered.length) {
+      list.innerHTML = "";
+      list.classList.add("hidden");
+      empty.classList.remove("hidden");
+      return;
+    }
+    list.classList.remove("hidden");
+    empty.classList.add("hidden");
+    list.innerHTML = filtered
+      .map((p) => {
+        const cat = catMap[p.category];
+        return `<a href="/kebijakan/${p.id}" class="flex items-start gap-4 px-5 py-4 hover:bg-amber-50/40 transition-colors group block">
+        <div class="flex-shrink-0 pt-0.5 w-20"><span class="${typeCls[p.type] || typeCls["SK Bupati"]}">${p.type}</span></div>
+        <div class="flex-1 min-w-0">
+          <p class="text-stone-400 text-xs font-mono mb-0.5">${p.number}</p>
+          <p class="text-stone-800 font-medium text-sm group-hover:text-amber-700 transition-colors leading-snug">${p.title}</p>
+          ${cat ? `<p class="text-stone-400 text-xs mt-1">${cat.name}</p>` : ""}
+          <p class="text-stone-400 text-sm mt-1 line-clamp-1 hidden sm:block">${p.summary}</p>
+        </div>
+        <div class="flex-shrink-0 text-right hidden sm:flex flex-col items-end gap-1.5 pt-0.5">
+          <span class="text-stone-300 text-xs font-mono">${p.year}</span>
+          <span class="${statusCls[p.status] || ""}">${p.status}</span>
+        </div>
+      </a>`;
+      })
+      .join("");
+  }
+
+  function applyFilters() {
+    const q = document
+      .getElementById("search-input")
+      .value.toLowerCase()
+      .trim();
+    const cat = document.getElementById("category-filter").value;
+    const year = document.getElementById("year-filter").value;
+    renderPolicies(
+      policies.filter(
+        (p) =>
+          (!q ||
+            p.title.toLowerCase().includes(q) ||
+            p.number.toLowerCase().includes(q) ||
+            p.summary.toLowerCase().includes(q)) &&
+          (!cat || p.category === cat) &&
+          (!year || p.year === parseInt(year)),
+      ),
+    );
+  }
+
+  renderPolicies(policies);
+  document
+    .getElementById("search-input")
+    .addEventListener("input", applyFilters);
+  document
+    .getElementById("category-filter")
+    .addEventListener("change", applyFilters);
+  document
+    .getElementById("year-filter")
+    .addEventListener("change", applyFilters);
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("kategori")) {
+    document.getElementById("category-filter").value = params.get("kategori");
+    applyFilters();
+  }
+  if (params.get("q")) {
+    document.getElementById("search-input").value = params.get("q");
+    applyFilters();
+  }
+</script>

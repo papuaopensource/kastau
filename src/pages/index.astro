@@ -1,0 +1,208 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Icon from "../components/Icon.astro";
+import { categories, policies, stats } from "../data/mockData";
+
+const recentPolicies = policies.slice(0, 6);
+
+const typeBadge: Record<string, string> = {
+  Perda:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-bird-50 text-bird-700 border border-bird-200",
+  Perbup:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-teluk-50 text-teluk-700 border border-teluk-200",
+  "SK Bupati":
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-paper-100 text-ink-600 border border-paper-300",
+  Pergub:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-gold-50 text-gold-700 border border-gold-200",
+};
+const statusBadge: Record<string, string> = {
+  berlaku:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-forest-50 text-forest-700 border border-forest-200",
+  direvisi:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-gold-50 text-gold-700 border border-gold-200",
+  dicabut:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-bird-50 text-bird-700 border border-bird-200",
+};
+---
+
+<MainLayout title="Kastau — Kebijakan Publik Kabupaten Jayapura">
+  <!-- HERO -->
+  <section class="bg-white border-b border-paper-200">
+    <div class="max-w-3xl mx-auto px-6 pt-16 pb-14 text-center">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold-50 border border-gold-200 text-gold-700 text-xs font-mono uppercase tracking-wider mb-7"
+      >
+        Kabupaten Jayapura • Provinsi Papua
+      </div>
+
+      <h1
+        class="text-4xl md:text-[3.25rem] font-semibold text-ink-900 leading-tight tracking-tight mb-4"
+      >
+        Kebijakan pemerintah,<br />
+        <span class="text-gold-600 italic">mudah dipahami.</span>
+      </h1>
+
+      <p class="text-ink-500 text-lg mb-10 max-w-lg mx-auto leading-relaxed">
+        <span class="font-semibold text-ink-700"
+          >{stats.kebijakanTerdokumentasi} peraturan</span
+        > daerah, peraturan bupati, dan SK diringkas untuk warga Kabupaten Jayapura.
+      </p>
+
+      <form action="/cari" method="get" class="relative max-w-xl mx-auto mb-5">
+        <Icon
+          name="search"
+          class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-300 pointer-events-none"
+        />
+        <input
+          type="text"
+          name="q"
+          placeholder="Cari peraturan, topik, atau nomor kebijakan..."
+          class="w-full bg-paper-100 border border-paper-300 text-ink-800 placeholder-ink-300 rounded-xl pl-12 pr-32 py-3.5 text-[15px] focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-gold-400 focus:bg-white transition-all"
+        />
+        <button
+          type="submit"
+          class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center bg-gold-600 hover:bg-gold-700 text-white font-medium text-sm py-2 px-5 rounded-lg transition-colors"
+        >
+          Cari
+        </button>
+      </form>
+
+      <div class="flex flex-wrap gap-2 justify-center">
+        {
+          ["Perda 2024", "Beasiswa", "Infrastruktur", "Hutan adat", "UMKM"].map(
+            (q) => (
+              <a
+                href={`/cari?q=${encodeURIComponent(q)}`}
+                class="text-ink-500 hover:text-ink-800 hover:bg-paper-200 text-sm px-3 py-1 rounded-full border border-paper-300 transition-colors"
+              >
+                {q}
+              </a>
+            ),
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="bg-paper-100 border-b border-paper-200">
+    <div
+      class="max-w-5xl mx-auto px-6 py-4 flex flex-wrap justify-center gap-x-8 gap-y-2"
+    >
+      {
+        [
+          {
+            value: stats.kebijakanTerdokumentasi,
+            label: "kebijakan terdokumentasi",
+          },
+          { value: stats.kecamatan, label: "kecamatan terliputi" },
+          { value: stats.kampung, label: "kampung/desa" },
+          { value: stats.wargaBerlangganan, label: "warga berlangganan" },
+        ].map((s) => (
+          <div class="flex items-center gap-1.5">
+            <span class="font-semibold text-ink-800 text-sm">
+              {s.value.toLocaleString("id-ID")}
+            </span>
+            <span class="text-ink-400 text-xs">{s.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- KATEGORI -->
+  <section class="max-w-5xl mx-auto px-6 pt-14 pb-12">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <p
+          class="text-gold-600 font-mono text-xs uppercase tracking-[0.12em] font-medium mb-1"
+        >
+          Jelajahi
+        </p>
+        <h2 class="font-semibold text-ink-900 text-xl">Kategori Kebijakan</h2>
+      </div>
+      <a
+        href="/kategori"
+        class="inline-flex items-center justify-center gap-1.5 hover:bg-paper-200 text-ink-500 hover:text-ink-800 font-medium text-sm px-3 py-1.5 rounded-lg transition-colors"
+      >
+        Semua <Icon name="chevron-right" class="w-4 h-4" />
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+      {
+        categories.map((cat) => (
+          <a
+            href={`/kategori/${cat.slug}`}
+            class="group flex flex-col items-center text-center p-4 rounded-xl bg-white border border-paper-200 hover:border-gold-300 hover:shadow-sm transition-all duration-150"
+          >
+            <div class="w-10 h-10 rounded-lg bg-paper-100 group-hover:bg-gold-50 flex items-center justify-center mb-3 transition-colors">
+              <Icon
+                name={cat.icon}
+                class="w-5 h-5 text-ink-500 group-hover:text-gold-600 transition-colors"
+              />
+            </div>
+            <span class="text-ink-700 group-hover:text-ink-900 text-xs font-semibold leading-snug transition-colors">
+              {cat.name}
+            </span>
+            <span class="text-ink-300 text-[0.65rem] mt-1 font-mono">
+              {cat.policyCount}
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- KEBIJAKAN TERBARU -->
+  <section class="max-w-5xl mx-auto px-6 pb-20">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <p
+          class="text-gold-600 font-mono text-xs uppercase tracking-[0.12em] font-medium mb-1"
+        >
+          Terbaru
+        </p>
+        <h2 class="font-semibold text-ink-900 text-xl">Kebijakan Terkini</h2>
+      </div>
+      <a
+        href="/kebijakan"
+        class="inline-flex items-center justify-center gap-1.5 hover:bg-paper-200 text-ink-500 hover:text-ink-800 font-medium text-sm px-3 py-1.5 rounded-lg transition-colors"
+      >
+        Lihat semua <Icon name="chevron-right" class="w-4 h-4" />
+      </a>
+    </div>
+
+    <div
+      class="bg-white border border-paper-200 rounded-xl overflow-hidden divide-y divide-paper-100"
+    >
+      {
+        recentPolicies.map((policy) => (
+          <a
+            href={`/kebijakan/${policy.id}`}
+            class="flex items-start gap-4 px-5 py-4 hover:bg-paper-50 transition-colors group"
+          >
+            <div class="flex-shrink-0 pt-0.5 w-20">
+              <span class={typeBadge[policy.type]}>{policy.type}</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-ink-400 text-xs font-mono mb-0.5">
+                {policy.number}
+              </p>
+              <p class="text-ink-800 font-medium text-sm group-hover:text-gold-700 transition-colors leading-snug">
+                {policy.title}
+              </p>
+              <p class="text-ink-400 text-sm mt-1 line-clamp-1 hidden sm:block leading-relaxed">
+                {policy.summary}
+              </p>
+            </div>
+            <div class="flex-shrink-0 text-right hidden sm:flex flex-col items-end gap-1.5 pt-0.5">
+              <span class="text-ink-300 text-xs font-mono">{policy.year}</span>
+              <span class={statusBadge[policy.status]}>{policy.status}</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</MainLayout>

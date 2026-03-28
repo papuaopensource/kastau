@@ -1,0 +1,243 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { policies, categories } from "../../data/mockData";
+
+export function getStaticPaths() {
+  return policies.map((p) => ({ params: { id: String(p.id) } }));
+}
+
+const { id } = Astro.params;
+const policy = policies.find((p) => p.id === parseInt(id));
+if (!policy) return Astro.redirect("/kebijakan");
+
+const category = categories.find((c) => c.slug === policy.category);
+const related = policies
+  .filter((p) => p.category === policy.category && p.id !== policy.id)
+  .slice(0, 3);
+
+const typeBadge: Record<string, string> = {
+  Perda:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-bird-50 text-bird-700 border border-bird-200",
+  Perbup:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-teluk-50 text-teluk-700 border border-teluk-200",
+  "SK Bupati":
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-paper-100 text-ink-600 border border-paper-300",
+  Pergub:
+    "inline-flex items-center text-[0.65rem] font-mono font-semibold px-1.5 py-0.5 rounded bg-gold-50 text-gold-700 border border-gold-200",
+};
+const statusBadge: Record<string, string> = {
+  berlaku:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-forest-50 text-forest-700 border border-forest-200",
+  direvisi:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-gold-50 text-gold-700 border border-gold-200",
+  dicabut:
+    "inline-flex items-center text-[0.65rem] font-medium px-2 py-0.5 rounded-full bg-bird-50 text-bird-700 border border-bird-200",
+};
+---
+
+<MainLayout title={`${policy.number} — Kastau`} description={policy.summary}>
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-1.5 text-sm text-ink-400 mb-8">
+      <a href="/kebijakan" class="hover:text-ink-700 transition-colors"
+        >Kebijakan</a
+      >
+      <Icon name="chevron-right" class="w-3.5 h-3.5 text-ink-300" />
+      {
+        category && (
+          <>
+            <a
+              href={`/kategori/${category.slug}`}
+              class="hover:text-ink-700 transition-colors"
+            >
+              {category.name}
+            </a>
+            <Icon name="chevron-right" class="w-3.5 h-3.5 text-ink-300" />
+          </>
+        )
+      }
+      <span class="text-ink-500 truncate max-w-45">{policy.number}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Main -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <span class={typeBadge[policy.type]}>{policy.type}</span>
+          <span class={statusBadge[policy.status]}>{policy.status}</span>
+        </div>
+
+        <h1
+          class="font-semibold text-ink-900 text-2xl md:text-3xl leading-snug mb-2"
+        >
+          {policy.title}
+        </h1>
+        <p class="text-ink-400 font-mono text-sm mb-8">{policy.number}</p>
+
+        <!-- Summary -->
+        <div class="bg-gold-50 border border-gold-200 rounded-xl p-5 mb-6">
+          <div class="flex items-center gap-2 mb-3">
+            <div
+              class="w-5 h-5 rounded bg-gold-200 flex items-center justify-center"
+            >
+              <Icon name="info" class="w-3 h-3 text-gold-700" />
+            </div>
+            <span
+              class="text-gold-700 text-xs font-mono uppercase tracking-wider font-semibold"
+              >Ringkasan</span
+            >
+          </div>
+          <p class="text-ink-700 text-[15px] leading-relaxed">
+            {policy.summary}
+          </p>
+        </div>
+
+        <!-- Detail -->
+        <div class="mb-8">
+          <h2 class="font-semibold text-ink-800 text-lg mb-3">Isi Peraturan</h2>
+          <p class="text-ink-500 leading-relaxed text-[15px]">
+            {policy.detail}
+          </p>
+        </div>
+
+        <!-- Download -->
+        <div
+          class="bg-white border border-paper-200 rounded-xl p-4 flex items-center justify-between gap-4 hover:shadow-sm"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-lg bg-paper-100 flex items-center justify-center shrink-0"
+            >
+              <Icon name="file-text" class="w-5 h-5 text-ink-400" />
+            </div>
+            <div>
+              <p class="text-ink-700 font-semibold text-sm">Dokumen Resmi</p>
+              <p class="text-ink-400 text-xs mt-0.5">{policy.number} · PDF</p>
+            </div>
+          </div>
+          <a
+            href={policy.documentUrl}
+            class="inline-flex items-center justify-center gap-2 bg-gold-600 hover:bg-gold-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors"
+          >
+            <Icon name="download" class="w-4 h-4" />Unduh
+          </a>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-paper-200">
+          <a
+            href="mailto:koreksi@kastau.id"
+            class="inline-flex items-center gap-1.5 text-ink-300 hover:text-ink-500 text-xs transition-colors"
+          >
+            <Icon name="alert-circle" class="w-3.5 h-3.5" />Temukan kesalahan?
+            Laporkan kepada kami
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="space-y-5">
+        <!-- Metadata -->
+        <div class="bg-white border border-paper-200 rounded-xl p-5">
+          <h3 class="font-semibold text-ink-700 text-sm mb-4">Informasi</h3>
+          <dl class="space-y-3.5">
+            <div>
+              <dt
+                class="text-ink-400 text-xs uppercase tracking-wide font-medium mb-0.5"
+              >
+                Nomor
+              </dt>
+              <dd class="text-ink-700 font-mono text-xs leading-relaxed">
+                {policy.number}
+              </dd>
+            </div>
+            <div>
+              <dt
+                class="text-ink-400 text-xs uppercase tracking-wide font-medium mb-0.5"
+              >
+                Tanggal
+              </dt>
+              <dd class="text-ink-700 text-sm flex items-center gap-1.5">
+                <Icon name="calendar" class="w-3.5 h-3.5 text-ink-300" />{
+                  policy.date
+                }
+              </dd>
+            </div>
+            <div>
+              <dt
+                class="text-ink-400 text-xs uppercase tracking-wide font-medium mb-0.5"
+              >
+                Kategori
+              </dt>
+              <dd>
+                {
+                  category && (
+                    <a
+                      href={`/kategori/${category.slug}`}
+                      class="inline-flex items-center gap-1.5 text-gold-600 hover:text-gold-800 text-sm font-medium transition-colors"
+                    >
+                      <Icon name={category.icon} class="w-3.5 h-3.5" />
+                      {category.name}
+                    </a>
+                  )
+                }
+              </dd>
+            </div>
+            <div>
+              <dt
+                class="text-ink-400 text-xs uppercase tracking-wide font-medium mb-1"
+              >
+                Status
+              </dt>
+              <dd>
+                <span class={statusBadge[policy.status]}>{policy.status}</span>
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Related -->
+        {
+          related.length > 0 && (
+            <div>
+              <h3 class="font-semibold text-ink-500 text-sm mb-3">
+                Kebijakan Terkait
+              </h3>
+              <div class="space-y-2">
+                {related.map((r) => (
+                  <a
+                    href={`/kebijakan/${r.id}`}
+                    class="block p-3.5 rounded-xl bg-white border border-paper-200 hover:border-gold-300 hover:shadow-sm transition-all"
+                  >
+                    <p class="text-ink-400 text-xs font-mono mb-0.5">
+                      {r.number}
+                    </p>
+                    <p class="text-ink-700 text-sm leading-snug line-clamp-2 font-medium">
+                      {r.title}
+                    </p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )
+        }
+
+        <!-- Nudge -->
+        <div class="bg-forest-50 border border-forest-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <Icon name="bell" class="w-5 h-5 text-forest-600 shrink-0 mt-0.5" />
+            <div>
+              <p class="text-forest-800 text-sm font-semibold mb-1">
+                Pantau kategori ini
+              </p>
+              <p class="text-forest-600 text-xs leading-relaxed">
+                Kebijakan baru di bidang {category?.name} akan ditampilkan di halaman
+                kategori secara otomatis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
