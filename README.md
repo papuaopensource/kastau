@@ -19,3 +19,8 @@ Kastau adalah platform kebijakan publik Kabupaten Jayapura — menyajikan peratu
 ## Lisensi
 
 GNU AGPL v3 — lihat [LICENSE](LICENSE).
+
+---
+
+> [!NOTE]
+> Proyek ini masih dalam pengembangan aktif. Data yang ditampilkan bersifat dummy dan belum mencerminkan kebijakan resmi Kabupaten Jayapura.
