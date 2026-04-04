@@ -15,6 +15,12 @@ Kastau adalah platform kebijakan publik Kabupaten Jayapura — menyajikan peratu
 
 - [Astro](https://astro.build) — static site framework
 - [Tailwind CSS](https://tailwindcss.com) — styling
+- [FastAPI](https://fastapi.tiangolo.com) — backend API
+- [Turborepo](https://turbo.build) — monorepo build system
+
+## Kontribusi
+
+Lihat [CONTRIBUTING.md](CONTRIBUTING.md) untuk panduan setup lokal dan konvensi kode.
 
 ## Lisensi
 
