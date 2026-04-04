@@ -1,5 +1,6 @@
 # build output
 dist/
+.turbo/
 
 # generated types
 .vscode/
@@ -7,6 +8,13 @@ dist/
 
 # dependencies
 node_modules/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
 
 # logs
 npm-debug.log*
@@ -17,6 +25,7 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.local
 
 # macOS-specific files
 .DS_Store
