@@ -17,7 +17,7 @@ Install `pnpm`: `npm install -g pnpm`
 ## Setup Lokal
 
 ```bash
-git clone https://github.com/yokoberek/kastau.git
+git clone https://github.com/papuaopensource/kastau.git
 cd kastau
 
 # Install semua Node dependencies (frontend + turbo)
