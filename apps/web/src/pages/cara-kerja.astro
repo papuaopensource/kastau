@@ -174,6 +174,39 @@ const faqs = [
       </div>
     </div>
 
+    <!-- API Access -->
+    <div class="mb-14 bg-ink-900 rounded-2xl p-8 text-paper-50 overflow-hidden relative">
+      <div class="absolute top-0 right-0 p-8 opacity-10">
+        <Icon name="code" class="w-32 h-32" />
+      </div>
+      <div class="relative z-10 max-w-xl">
+        <h2 class="font-semibold text-forest-400 text-2xl mb-4">Akses Data untuk Peneliti</h2>
+        <p class="text-paper-300 text-sm mb-6 leading-relaxed">
+          Kastau menyediakan API publik secara gratis untuk membantu peneliti, jurnalis, dan pegiat keterbukaan informasi dalam mengakses data kebijakan Kabupaten Jayapura secara programatik.
+        </p>
+        <div class="space-y-4">
+          <div class="font-mono text-xs p-3 bg-ink-800 rounded-lg border border-ink-700">
+            <span class="text-ink-400 block mb-1">Base URL:</span>
+            <code class="text-paper-100">https://api.kastau.id/api/v1</code>
+          </div>
+          <div class="space-y-2">
+            <span class="text-xs text-ink-400 block uppercase tracking-wider font-semibold">Contoh Penggunaan:</span>
+            <div class="bg-ink-800 rounded-lg border border-ink-700 overflow-hidden">
+               <div class="flex px-3 py-1 bg-ink-700/50 text-[10px] text-ink-400 border-b border-ink-700 font-mono">Terminal / bash</div>
+               <pre class="p-3 font-mono text-[11px] text-forest-300 overflow-x-auto"><code># Ambil kebijakan kategori pendidikan
+curl https://api.kastau.id/api/v1/policies?category=pendidikan
+
+# Cari kebijakan tentang pariwisata
+curl https://api.kastau.id/api/v1/search?q=pariwisata</code></pre>
+            </div>
+          </div>
+          <p class="text-ink-400 text-[11px] italic">
+            Dokumentasi lengkap tersedia di <a href="https://api.kastau.id/docs" class="text-gold-400 hover:text-gold-300 underline underline-offset-4">api.kastau.id/docs</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
     <!-- FAQ -->
     <div class="mb-14">
       <h2 class="font-semibold text-ink-900 text-2xl mb-8">Pertanyaan Umum</h2>
